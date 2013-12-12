@@ -1,0 +1,24 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>首页 - Golang 中国博客</title>
+{{end}}
+{{define "body"}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+你好，世界！
+        </div>
+
+        <div class="col-sm-3">
+            <div class="widget">
+                <h4>关于我们</h4>
+            </div>
+
+            <div class="widget">
+                <h4>文章列表</h4>
+                <a href="/archive"></a>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

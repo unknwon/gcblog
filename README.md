@@ -1,4 +1,4 @@
 gcblog
 ======
 
-An open source project for Go China blog.
+An open source project for Golang China blog.

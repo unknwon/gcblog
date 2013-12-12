@@ -1,0 +1,16 @@
+{
+	"version": 0,
+	"gopm": {
+		"enable": true,
+		"install": true
+	},
+	"go_install": false,
+	"watch_ext": [],
+	"dir_structure": {
+		"controllers": "",
+		"models": "",
+		"others": []
+	},
+	"cmd_args": [],
+	"envs": []
+}

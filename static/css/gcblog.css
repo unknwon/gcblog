@@ -1,0 +1,38 @@
+/*!
+ * Golang China Blog (http://blog.go-china.org)
+ * Copyright 2013 Golang China Blog.
+ * Licensed under http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+body {
+	padding-top: 70px;
+}
+.navbar-gcblog {
+	background-color: #2894FF;
+ 	border-color: #0072E3;
+}
+.navbar-brand {
+	color: white;
+}
+.navbar-brand:hover {
+	color: white;
+}
+.navbar-nav > li > a {
+	color: white;
+}
+.navbar-nav > li > a:hover, .nav > li > a:focus {
+	background-color: #0072E3;
+}
+.navbar-nav > .active {
+	background-color: #0072E3;
+}
+.widget h4 {
+	display: block;
+	background: #2894FF;
+	color: white;
+	text-transform: capitalize;
+	border: 1px solid #0072E3;
+	margin-bottom: 10px;
+	text-align: center;
+	padding: 10px 5px;
+}
