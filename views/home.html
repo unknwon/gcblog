@@ -6,17 +6,54 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-你好，世界！
+            {{if not .IsSinglePost}}
+            {{range .RecentArchives}}
+            <div class="article">
+                <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
+                {{byte2str .Content | str2html}}
+            </div>
+            {{end}}
+            {{else}}
+            {{with .SinglePost}}
+            <div class="article">
+                <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
+                {{byte2str .Content | str2html}}
+            </div>
+            {{end}}
+            {{end}}
         </div>
 
         <div class="col-sm-3">
             <div class="widget">
                 <h4>关于我们</h4>
+                <p>
+                    Golang 中国是由 Go 语言中文爱好者组成的技术社区，致力于 Go 语言在中国的发展与传播。
+                </p>
+
+                <p>
+                    如果您希望分享您的优秀博文，并借名发表，可以通过下方邮箱联系我们。
+                </p>
+                <div>
+                    <i class="fa fa-envelope"></i> 联系邮箱：joe2010xtmf#163.com
+                </div>
+                
+                <div>
+                    <a target="_blank" href="http://www.weibo.com/p/1005053211200050/home"><i class="fa fa-weibo"></i> 关注官方微博</a>
+                </div>
+                
+                <div>
+                    <a href="feed://blog.go-china.org/feed.atom"><i class="fa fa-rss-square"></i> 订阅博客更新</a>
+                </div>
             </div>
 
             <div class="widget">
                 <h4>文章列表</h4>
-                <a href="/archive"></a>
+                <h5>最近发表文章：</h5>
+                {{range .RecentArchives}}
+                <div><a href="/{{.Name}}">{{.Title}}</a></div>
+                {{end}}
+                <br>
+                <a href="/archives"><i class="fa fa-hand-o-right"></i> 浏览所有文章</a>
             </div>
         </div>
     </div>

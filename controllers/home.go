@@ -14,10 +14,15 @@
 
 package controllers
 
+import (
+	"github.com/Unknwon/gcblog/models"
+)
+
 type HomeController struct {
 	baseController
 }
 
 func (this *HomeController) Get() {
 	this.TplNames = "home.html"
+	this.Data["RecentArchives"] = models.GetRecentPosts()
 }

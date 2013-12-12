@@ -1,10 +1,10 @@
 {
 	"version": 0,
 	"gopm": {
-		"enable": true,
+		"enable": false,
 		"install": true
 	},
-	"go_install": false,
+	"go_install": true,
 	"watch_ext": [],
 	"dir_structure": {
 		"controllers": "",

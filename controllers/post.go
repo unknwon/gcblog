@@ -12,32 +12,24 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-// An open source project for Golang China blog.
-package main
+package controllers
 
 import (
-	"github.com/astaxie/beego"
-
-	"github.com/Unknwon/gcblog/controllers"
+	"github.com/Unknwon/gcblog/models"
 )
 
-const (
-	APP_VER = "0.1.0.1212"
-)
-
-func main() {
-	beego.Info(beego.AppName, APP_VER)
-
-	// Register routers.
-	beego.Router("/", &controllers.HomeController{})
-	beego.Router("/:all", &controllers.PostController{})
-
-	// Register template functions.
-	beego.AddFuncMap("byte2str", byte2Str)
-
-	beego.Run()
+type PostController struct {
+	baseController
 }
 
-func byte2Str(data []byte) string {
-	return string(data)
+func (this *PostController) Get() {
+	this.TplNames = "home.html"
+	this.Data["IsSinglePost"] = true
+	this.Data["RecentArchives"] = models.GetRecentPosts()
+	arch := models.GetSinglePost(this.Ctx.Request.RequestURI[1:])
+	if arch == nil {
+		this.Redirect("/", 302)
+		return
+	}
+	this.Data["SinglePost"] = arch
 }
