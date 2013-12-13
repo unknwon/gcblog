@@ -1,23 +1,35 @@
 {{template "base/base.html" .}}
 {{define "head"}}
-<title>首页 - Golang 中国博客</title>
+<title>
+{{if .IsSinglePost}}
+{{.SinglePost.Title}}
+{{else if .IsAllPost}}
+文章列表
+{{else}}
+首页
+{{end}}
+- Golang 中国博客
+</title>
 {{end}}
 {{define "body"}}
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-            {{if not .IsSinglePost}}
-            {{range .RecentArchives}}
+            {{if .IsSinglePost}}
+            {{with .SinglePost}}
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
                 {{byte2str .Content | str2html}}
             </div>
             {{end}}
             {{else}}
-            {{with .SinglePost}}
+            {{$isAllPost := .IsAllPost}}
+            {{range .RecentArchives}}
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
+                {{if not $isAllPost}}
                 {{byte2str .Content | str2html}}
+                {{end}}
             </div>
             {{end}}
             {{end}}
