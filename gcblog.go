@@ -22,8 +22,12 @@ import (
 )
 
 const (
-	APP_VER = "0.2.0.1213"
+	APP_VER = "0.2.1.1213"
 )
+
+func init() {
+	controllers.IsPro = beego.RunMode == "pro"
+}
 
 func main() {
 	beego.Info(beego.AppName, APP_VER)

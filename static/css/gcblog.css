@@ -18,7 +18,7 @@ body {
 .navbar-brand:hover {
 	color: white;
 }
-.navbar-nav > li > a {
+.navbar-nav > li > a, .footer a {
 	color: white;
 }
 .navbar-nav > li > a:hover, .nav > li > a:focus {
@@ -39,4 +39,12 @@ body {
 }
 .title > a {
 	color: #8600FF;
+}
+footer {
+	padding-top: 15px;
+}
+.footer {
+	padding: 10px 0px 10px 0px;
+	color: white;
+	background-color: #46A3FF;
 }

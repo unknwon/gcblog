@@ -42,6 +42,8 @@ func (this *HomeController) Archives() {
 }
 
 func (this *HomeController) SinglePost() {
+	this.TplNames = "home.html"
+
 	reqPath := this.Ctx.Request.RequestURI[1:]
 	if strings.HasSuffix(reqPath, ".jpg") ||
 		strings.HasSuffix(reqPath, ".png") ||
@@ -57,7 +59,6 @@ func (this *HomeController) SinglePost() {
 		return
 	}
 
-	this.TplNames = "home.html"
 	this.Data["IsSinglePost"] = true
 	this.Data["RecentArchives"] = models.GetRecentPosts()
 	arch := models.GetSinglePost(this.Ctx.Request.RequestURI[1:])

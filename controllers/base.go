@@ -18,6 +18,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
+var IsPro bool
+
 type baseController struct {
 	beego.Controller
+}
+
+func (this *baseController) Prepare() {
+	this.Data["IsPro"] = IsPro
 }
