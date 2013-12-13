@@ -23,6 +23,14 @@
             </div>
             {{template "base/disqus.html"}}
             {{end}}
+            {{else if .IsWork}}
+            <h4>招聘发布与求职须知：</h4>
+            <ul>
+                <li>招聘发布者须本者求贤若渴、以诚相待的态度发布招聘启事。</li>
+                <li>所有招聘信息均由第三方提供，本站不对招聘具体内容负责。</li>
+                <li>若发现不实招聘信息，请及时告知我们。一经确认便将发布方加入黑名单并进行微博通告。</li>
+                <li>发布招聘信息步骤及格式请参考 <a href="https://github.com/Unknwon/gcblog/blob/master/README.md">GitHub</a>。</li>
+            </ul>
             {{else}}
             {{$isAllPost := .IsAllPost}}
             {{range .RecentArchives}}
@@ -57,6 +65,14 @@
                 <div>
                     <a href="feed://blog.go-china.org/feed.atom"><i class="fa fa-rss-square"></i> 订阅博客更新</a>
                 </div>
+            </div>
+
+            <div class="widget">
+                <h4>发布招聘</h4>
+                <p>
+                    如果您的团队需要 Go 语言方面的人才，可以通过我们这个平台发布招聘信息，因为这里汇聚了大量精英。
+                </p>
+                <a href="/work"><i class="fa fa-suitcase"></i> 人才招聘页面</a>
             </div>
 
             <div class="widget">

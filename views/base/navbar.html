@@ -5,7 +5,8 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">首页</a></li>
+				<li {{if .IsHome}}class="active"{{end}}><a href="/">首页</a></li>
+				<li {{if .IsWork}}class="active"{{end}}><a href="/work">招聘</a></li>
 			</ul>
 		</div>
 	</nav>
