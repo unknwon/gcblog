@@ -15,6 +15,13 @@
 package controllers
 
 import (
+	"io"
+	"os"
+	"path"
+	"strings"
+
+	"github.com/astaxie/beego"
+
 	"github.com/Unknwon/gcblog/models"
 )
 
@@ -23,6 +30,21 @@ type PostController struct {
 }
 
 func (this *PostController) Get() {
+	reqPath := this.Ctx.Request.RequestURI[1:]
+	if strings.HasSuffix(reqPath, ".jpg") ||
+		strings.HasSuffix(reqPath, ".png") ||
+		strings.HasSuffix(reqPath, ".gif") {
+		f, err := os.Open(path.Join("content", reqPath))
+		if err != nil {
+			beego.Error(err)
+			return
+		}
+		defer f.Close()
+
+		io.Copy(this.Ctx.ResponseWriter, f)
+		return
+	}
+
 	this.TplNames = "home.html"
 	this.Data["IsSinglePost"] = true
 	this.Data["RecentArchives"] = models.GetRecentPosts()
