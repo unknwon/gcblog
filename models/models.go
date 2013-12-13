@@ -15,11 +15,14 @@
 package models
 
 import (
+	"os"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/Unknwon/com"
 	"github.com/astaxie/beego"
+	"github.com/howeyc/fsnotify"
 	"github.com/slene/blackfriday"
 )
 
@@ -29,9 +32,12 @@ type archive struct {
 	Content []byte
 }
 
-var archives []*archive
+var (
+	archives  []*archive
+	eventTime = make(map[string]int64)
+)
 
-func init() {
+func loadArchiveNames() {
 	archNames := strings.Split(beego.AppConfig.String("archives"), "|")
 	archives = make([]*archive, 0, len(archNames))
 	for _, name := range archNames {
@@ -41,6 +47,79 @@ func init() {
 		}
 		arch.Name = name
 		archives = append(archives, arch)
+	}
+}
+
+// checkTMPFile returns true if the event was for TMP files.
+func checkTMPFile(name string) bool {
+	if strings.HasSuffix(strings.ToLower(name), ".tmp") {
+		return true
+	}
+	return false
+}
+
+// getFileModTime retuens unix timestamp of `os.File.ModTime` by given path.
+func getFileModTime(path string) int64 {
+	path = strings.Replace(path, "\\", "/", -1)
+	f, err := os.Open(path)
+	if err != nil {
+		beego.Error("Fail to open file:", err)
+		return time.Now().Unix()
+	}
+	defer f.Close()
+
+	fi, err := f.Stat()
+	if err != nil {
+		beego.Error("Fail to get file information:", err)
+		return time.Now().Unix()
+	}
+
+	return fi.ModTime().Unix()
+}
+
+func init() {
+	loadArchiveNames()
+
+	// Watch changes.
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		beego.Error("NewWatcher:", err)
+		return
+	}
+
+	go func() {
+		for {
+			select {
+			case e := <-watcher.Event:
+
+				// Skip TMP files for Sublime Text.
+				if checkTMPFile(e.Name) {
+					continue
+				}
+
+				mt := getFileModTime(e.Name)
+				if t := eventTime[e.Name]; mt == t {
+					continue
+				}
+
+				eventTime[e.Name] = mt
+				beego.Info("Changes detected")
+				loadArchiveNames()
+			case err := <-watcher.Error:
+				beego.Error("Watcher error:", err)
+			}
+		}
+	}()
+
+	err = watcher.Watch("content")
+	if err != nil {
+		beego.Error("Watch path:", err)
+		return
+	}
+	err = watcher.Watch("conf/app.conf")
+	if err != nil {
+		beego.Error("Watch path:", err)
+		return
 	}
 }
 
