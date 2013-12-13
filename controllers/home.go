@@ -15,6 +15,13 @@
 package controllers
 
 import (
+	"io"
+	"os"
+	"path"
+	"strings"
+
+	"github.com/astaxie/beego"
+
 	"github.com/Unknwon/gcblog/models"
 )
 
@@ -26,4 +33,37 @@ func (this *HomeController) Get() {
 	this.Data["IsHome"] = true
 	this.TplNames = "home.html"
 	this.Data["RecentArchives"] = models.GetRecentPosts()
+}
+
+func (this *HomeController) Archives() {
+	this.TplNames = "home.html"
+	this.Data["IsAllPost"] = true
+	this.Data["RecentArchives"] = models.GetAllPosts()
+}
+
+func (this *HomeController) SinglePost() {
+	reqPath := this.Ctx.Request.RequestURI[1:]
+	if strings.HasSuffix(reqPath, ".jpg") ||
+		strings.HasSuffix(reqPath, ".png") ||
+		strings.HasSuffix(reqPath, ".gif") {
+		f, err := os.Open(path.Join("content", reqPath))
+		if err != nil {
+			beego.Error(err)
+			return
+		}
+		defer f.Close()
+
+		io.Copy(this.Ctx.ResponseWriter, f)
+		return
+	}
+
+	this.TplNames = "home.html"
+	this.Data["IsSinglePost"] = true
+	this.Data["RecentArchives"] = models.GetRecentPosts()
+	arch := models.GetSinglePost(this.Ctx.Request.RequestURI[1:])
+	if arch == nil {
+		this.Redirect("/", 302)
+		return
+	}
+	this.Data["SinglePost"] = arch
 }

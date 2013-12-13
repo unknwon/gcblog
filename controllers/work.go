@@ -25,5 +25,19 @@ type WorkController struct {
 func (this *WorkController) Get() {
 	this.Data["IsWork"] = true
 	this.TplNames = "home.html"
-	this.Data["RecentArchives"] = models.GetRecentPosts()
+	this.Data["AllWorks"] = models.GetAllWorks()
+	this.Data["RecentArchives"] = models.GetAllPosts()
+}
+
+func (this *WorkController) SingleWork() {
+	this.TplNames = "home.html"
+	this.Data["IsWork"] = true
+	this.Data["IsSingleWork"] = true
+	this.Data["RecentArchives"] = models.GetAllPosts()
+	work := models.GetSingleWork(this.Ctx.Request.RequestURI[6:])
+	if work == nil {
+		this.Redirect("/", 302)
+		return
+	}
+	this.Data["SingleWork"] = work
 }

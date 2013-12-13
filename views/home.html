@@ -3,6 +3,10 @@
 <title>
 {{if .IsSinglePost}}
 {{.SinglePost.Title}}
+{{else if .IsSingleWork}}
+招聘：{{.SingleWork.Title}}
+{{else if .IsWork}}
+人才招聘
 {{else if .IsAllPost}}
 文章列表
 {{else}}
@@ -31,6 +35,22 @@
                 <li>若发现不实招聘信息，请及时告知我们。一经确认便将发布方加入黑名单并进行微博通告。</li>
                 <li>发布招聘信息步骤及格式请参考 <a href="https://github.com/Unknwon/gcblog/blob/master/README.md">GitHub</a>。</li>
             </ul>
+            {{if .IsSingleWork}}
+            {{with .SingleWork}}
+            <div class="article">
+                <h2 class="title">{{.Title}}</h2>
+                {{byte2str .Content | str2html}}
+            </div>
+            {{end}}
+            {{template "base/disqus.html"}}
+            {{else}}
+            {{$isSingleWork := .IsSingleWork}}
+            {{range .AllWorks}}
+            <div class="article">
+                <h2 class="title"><a href="/work/{{.Name}}">{{.Title}}</a></h2>
+            </div>
+            {{end}}
+            {{end}}
             {{else}}
             {{$isAllPost := .IsAllPost}}
             {{range .RecentArchives}}

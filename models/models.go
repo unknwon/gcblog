@@ -34,6 +34,7 @@ type archive struct {
 
 var (
 	archives  []*archive
+	works     []*archive
 	eventTime = make(map[string]int64)
 )
 
@@ -47,6 +48,17 @@ func loadArchiveNames() {
 		}
 		arch.Name = name
 		archives = append(archives, arch)
+	}
+
+	workNames := strings.Split(beego.AppConfig.String("works"), "|")
+	works = make([]*archive, 0, len(workNames))
+	for _, name := range workNames {
+		work := getFile(path.Join("work", name))
+		if work == nil {
+			continue
+		}
+		work.Name = name
+		works = append(works, work)
 	}
 }
 
@@ -116,6 +128,11 @@ func init() {
 		beego.Error("Watch path:", err)
 		return
 	}
+	err = watcher.Watch("work")
+	if err != nil {
+		beego.Error("Watch path:", err)
+		return
+	}
 	err = watcher.Watch("conf/app.conf")
 	if err != nil {
 		beego.Error("Watch path:", err)
@@ -151,6 +168,10 @@ func getFile(filePath string) *archive {
 	return df
 }
 
+func GetAllPosts() []*archive {
+	return archives
+}
+
 func GetRecentPosts() []*archive {
 	if len(archives) >= 10 {
 		return archives[:10]
@@ -162,6 +183,19 @@ func GetSinglePost(name string) *archive {
 	for _, arch := range archives {
 		if name == arch.Name {
 			return arch
+		}
+	}
+	return nil
+}
+
+func GetAllWorks() []*archive {
+	return works
+}
+
+func GetSingleWork(name string) *archive {
+	for _, work := range works {
+		if name == work.Name {
+			return work
 		}
 	}
 	return nil
