@@ -23,6 +23,7 @@
             {{with .SinglePost}}
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
+                <h6 class="text-muted">{{.Author}} {{.Date}}</h6>
                 {{byte2str .Content | str2html}}
             </div>
             {{template "base/disqus.html"}}
@@ -56,6 +57,7 @@
             {{range .RecentArchives}}
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
+                <h6 class="text-muted">{{.Author}} {{.Date}}</h6>
                 {{if not $isAllPost}}
                 {{byte2str .Content | str2html}}
                 {{end}}

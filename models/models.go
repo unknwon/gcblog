@@ -27,9 +27,9 @@ import (
 )
 
 type archive struct {
-	Name    string
-	Title   string
-	Content []byte
+	Name, Title  string
+	Author, Date string
+	Content      []byte
 }
 
 var (
@@ -152,8 +152,29 @@ func getFile(filePath string) *archive {
 		return nil
 	}
 
-	// Parse and render.
 	s := string(p)
+	// Parse author and date.
+	if i := strings.Index(s, "---\n"); i > -1 {
+		if j := strings.Index(s[i+4:], "---\n"); j > -1 {
+			infos := strings.Split(s[i+4:j+i+4], "\n")
+			for k := range infos {
+				z := strings.Index(infos[k], ":")
+				if z == -1 {
+					continue
+				}
+
+				switch k {
+				case 0: // Author.
+					df.Author = strings.TrimSpace(infos[k][z+1:])
+				case 1: // Date.
+					df.Date = strings.TrimSpace(infos[k][z+1:])
+				}
+			}
+			s = strings.TrimPrefix(s[j+i+8:], "\n")
+		}
+	}
+
+	// Parse and render.
 	i := strings.Index(s, "\n")
 	if i > -1 {
 		// Has title.
