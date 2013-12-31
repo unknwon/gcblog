@@ -56,7 +56,7 @@ SuffixMapper几种命名方式和方案，基本可以满足各种需要。
 
 使用可以连写的API对于一个拥有语法提示的编辑器简直就是效率利器，那么我们还有什么理由不支持呢。看看我们这个能写多长：
 
-	engine.Where().And().Or().Asc().Desc().Find()
+	engine.Where("id=?", 1).And("name = ?", "xlw").Or("age > ?", 20).Asc("name").Desc("id").Find(&users)
 
 [xorm](https://github.com/lunny/xorm) 主要的操作实际上是两个RAW函数和七个ORM函数：
 
@@ -92,15 +92,16 @@ SuffixMapper几种命名方式和方案，基本可以满足各种需要。
 
 * Find：获取多条数据
 
-		err := engine.Find(...)
+		err := engine.Find(&users)
 		// SELECT * FROM user
 
 * Iterate & Rows：获取多条数据并逐条处理
 
-		err := engine.Iterate(...， func() {
+		err := engine.Iterate(...， func(...) {
 			// ...
 		})
 		// SELECT * FROM user
+
 		rows, err := engine.Rows(...)
 		// SELECT * FROM user
 		for rows.Next() {
@@ -132,7 +133,7 @@ SuffixMapper几种命名方式和方案，基本可以满足各种需要。
 
 只需要在程序启动时，执行`Sync`，并将需要同步的一个或者多个表对应的Struct作为参数传入，那么engine将自动的检测并新增表，新增字段，新增索引。
 
-是不是很简单，很强大。当然，其实也可以做到自动删除列，但是这样的话，很有可能会引起数据丢失，因此当前只提供了自动新增的功能。
+是不是很简单，很强大。当然，其实也可以做到自动删除列，但是这样的话，很有可能会引起数据丢失，因此当前只提供了自动新增的功能。这个功能后面还会继续增强。
 
 ## 第四种武器：混合事务
 
