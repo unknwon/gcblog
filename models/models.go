@@ -39,6 +39,7 @@ var (
 )
 
 func loadArchiveNames() {
+	beego.ParseConfig()
 	archNames := strings.Split(beego.AppConfig.String("archives"), "|")
 	archives = make([]*archive, 0, len(archNames))
 	for _, name := range archNames {
