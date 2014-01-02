@@ -171,7 +171,13 @@ func getFile(filePath string) *archive {
 					df.Date = strings.TrimSpace(infos[k][z+1:])
 				}
 			}
-			s = strings.TrimPrefix(s[j+i+8:], "\n")
+			s = s[j+i+8:]
+			for {
+				if !strings.HasPrefix(s, "\n") {
+					break
+				}
+				s = s[1:]
+			}
 		}
 	}
 
