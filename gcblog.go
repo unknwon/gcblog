@@ -22,11 +22,11 @@ import (
 )
 
 const (
-	APP_VER = "0.2.1.1213"
+	APP_VER = "0.2.2.0101"
 )
 
 func init() {
-	controllers.IsPro = beego.RunMode == "pro"
+	controllers.IsPro = beego.RunMode == "prod"
 }
 
 func main() {
