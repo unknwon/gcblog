@@ -32,13 +32,15 @@ type HomeController struct {
 func (this *HomeController) Get() {
 	this.Data["IsHome"] = true
 	this.TplNames = "home.html"
-	this.Data["RecentArchives"] = models.GetRecentPosts()
+	this.Data["RecentArchives"] = models.GetRecentPosts(5)
+	this.Data["RecentList"] = models.GetRecentPosts(10)
 }
 
 func (this *HomeController) Archives() {
 	this.TplNames = "home.html"
 	this.Data["IsAllPost"] = true
 	this.Data["RecentArchives"] = models.GetAllPosts()
+	this.Data["RecentList"] = models.GetRecentPosts(10)
 }
 
 func (this *HomeController) SinglePost() {
@@ -60,7 +62,7 @@ func (this *HomeController) SinglePost() {
 	}
 
 	this.Data["IsSinglePost"] = true
-	this.Data["RecentArchives"] = models.GetRecentPosts()
+	this.Data["RecentList"] = models.GetRecentPosts(10)
 	arch := models.GetSinglePost(this.Ctx.Request.RequestURI[1:])
 	if arch == nil {
 		this.Redirect("/", 302)

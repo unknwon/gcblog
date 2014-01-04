@@ -200,9 +200,9 @@ func GetAllPosts() []*archive {
 	return archives
 }
 
-func GetRecentPosts() []*archive {
-	if len(archives) >= 5 {
-		return archives[:5]
+func GetRecentPosts(num int) []*archive {
+	if len(archives) >= num {
+		return archives[:num]
 	}
 	return archives
 }
