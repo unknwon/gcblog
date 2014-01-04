@@ -39,7 +39,6 @@ var (
 )
 
 func loadArchiveNames() {
-	beego.ParseConfig()
 	archNames := strings.Split(beego.AppConfig.String("archives"), "|")
 	archives = make([]*archive, 0, len(archNames))
 	for _, name := range archNames {
@@ -60,6 +59,24 @@ func loadArchiveNames() {
 		}
 		work.Name = name
 		works = append(works, work)
+	}
+}
+
+var blogs []blog
+
+type blog struct {
+	Name, Link, Intro string
+}
+
+func loadRecommendBlogs() {
+	infos := strings.Split(beego.AppConfig.String("recommend_blogs"), "|||")
+	blogs = make([]blog, 0, len(infos))
+	for _, info := range infos {
+		ins := strings.Split(info, "|")
+		if len(ins) != 3 {
+			continue
+		}
+		blogs = append(blogs, blog{ins[0], ins[1], ins[2]})
 	}
 }
 
@@ -92,6 +109,7 @@ func getFileModTime(path string) int64 {
 
 func init() {
 	loadArchiveNames()
+	loadRecommendBlogs()
 
 	// Watch changes.
 	watcher, err := fsnotify.NewWatcher()
@@ -117,7 +135,9 @@ func init() {
 
 				eventTime[e.Name] = mt
 				beego.Info("Changes detected")
+				beego.ParseConfig()
 				loadArchiveNames()
+				loadRecommendBlogs()
 			case err := <-watcher.Error:
 				beego.Error("Watcher error:", err)
 			}
@@ -227,4 +247,8 @@ func GetSingleWork(name string) *archive {
 		}
 	}
 	return nil
+}
+
+func GetBlogs() []blog {
+	return blogs
 }

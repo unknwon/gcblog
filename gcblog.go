@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	APP_VER = "0.2.2.0101"
+	APP_VER = "0.2.3.0104"
 )
 
 func init() {
@@ -37,6 +37,7 @@ func main() {
 	beego.Router("/archives", &controllers.HomeController{}, "get:Archives")
 	beego.Router("/work", &controllers.WorkController{})
 	beego.Router("/work/:all", &controllers.WorkController{}, "get:SingleWork")
+	beego.Router("/recommend/blogs", &controllers.RecommendController{}, "get:Blogs")
 	beego.Router("/:all", &controllers.HomeController{}, "get:SinglePost")
 
 	// Register template functions.

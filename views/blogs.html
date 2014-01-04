@@ -1,0 +1,25 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>
+名人博客推荐 - Golang 中国博客
+</title>
+{{end}}
+{{define "body"}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="article">
+                <h1 class="title">名人博客推荐</h1>
+                <p>本页面收集了关于 Go 语言的国内外知名及精品博客，如有遗漏，请在评论中告知！</p>
+                {{range .Blogs}}
+                <h4><a target="_blank" href="{{.Link}}">{{.Name}}</a></h4>
+                <p>{{.Intro}}</p>
+                {{end}}
+            </div>
+            {{template "base/disqus.html"}}
+        </div>
+
+        {{template "base/sider.html" .}}
+    </div>
+</div>
+{{end}}

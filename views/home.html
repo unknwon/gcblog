@@ -66,51 +66,7 @@
             {{end}}
         </div>
 
-        <div class="col-md-3">
-            <div class="widget">
-                <h4>关于我们</h4>
-                <p>
-                    Golang 中国是由 Go 语言中文爱好者组成的技术社区，致力于 Go 语言在中国的发展与传播。
-                </p>
-
-                <p>
-                    如果您希望分享您的优秀博文，并借名发表，可以通过下方邮箱联系我们。
-                </p>
-                <div>
-                    <i class="fa fa-envelope"></i> 联系邮箱：joe2010xtmf#163.com
-                </div>
-                
-                <div>
-                    <a target="_blank" href="http://www.weibo.com/p/1005053211200050/home"><i class="fa fa-weibo"></i> 关注官方微博</a>
-                </div>
-                
-                <div>
-                    <a href="feed://blog.go-china.org/feed.atom"><i class="fa fa-rss-square"></i> 订阅博客更新</a>
-                </div>
-            </div>
-
-            <div class="widget">
-                <h4>发布招聘</h4>
-                <p>
-                    如果您的团队需要 Go 语言方面的人才，可以通过我们这个平台发布招聘信息，因为这里汇聚了大量精英。
-                </p>
-                <a href="/work"><i class="fa fa-suitcase"></i> 人才招聘页面</a>
-            </div>
-
-            <div class="widget">
-                <h4>文章列表</h4>
-                <h5>最近发表文章：</h5>
-                {{range .RecentList}}
-                <div><a href="/{{.Name}}">{{.Title}}</a></div>
-                {{end}}
-                <br>
-                <a href="/archives"><i class="fa fa-hand-o-right"></i> 浏览所有文章</a>
-            </div>
-
-            <div class="widget">
-                <img src="/static/img/gochinaweixin.jpeg" style="width: 260px;">
-            </div>
-        </div>
+        {{template "base/sider.html" .}}
     </div>
 </div>
 {{end}}
