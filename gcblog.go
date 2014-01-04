@@ -38,6 +38,7 @@ func main() {
 	beego.Router("/work", &controllers.WorkController{})
 	beego.Router("/work/:all", &controllers.WorkController{}, "get:SingleWork")
 	beego.Router("/recommend/blogs", &controllers.RecommendController{}, "get:Blogs")
+	beego.Router("/feed.atom", &controllers.HomeController{}, "get:Atom")
 	beego.Router("/:all", &controllers.HomeController{}, "get:SinglePost")
 
 	// Register template functions.

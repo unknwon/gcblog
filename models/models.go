@@ -22,6 +22,7 @@ import (
 
 	"github.com/Unknwon/com"
 	"github.com/astaxie/beego"
+	"github.com/gorilla/feeds"
 	"github.com/howeyc/fsnotify"
 	"github.com/slene/blackfriday"
 )
@@ -38,9 +39,19 @@ var (
 	eventTime = make(map[string]int64)
 )
 
+var Feed = &feeds.Feed{
+	Title:       "Golang 中国博客",
+	Link:        &feeds.Link{Href: "http://blog.go-china.org"},
+	Description: "Golang 中国博客",
+	Author:      &feeds.Author{"无闻", "joe2010xtmf@163.com"},
+	Created:     time.Now(),
+	Copyright:   "Copyright © 2013-2014 Golang 中国",
+}
+
 func loadArchiveNames() {
 	archNames := strings.Split(beego.AppConfig.String("archives"), "|")
 	archives = make([]*archive, 0, len(archNames))
+	Feed.Items = make([]*feeds.Item, 0, len(archNames))
 	for _, name := range archNames {
 		arch := getFile(path.Join("content", name))
 		if arch == nil {
@@ -48,6 +59,12 @@ func loadArchiveNames() {
 		}
 		arch.Name = name
 		archives = append(archives, arch)
+		Feed.Items = append(Feed.Items, &feeds.Item{
+			Title:   arch.Title,
+			Link:    &feeds.Link{Href: "http://blog.go-china.org/" + arch.Name},
+			Author:  &feeds.Author{Name: arch.Author},
+			Created: time.Now(),
+		})
 	}
 
 	workNames := strings.Split(beego.AppConfig.String("works"), "|")

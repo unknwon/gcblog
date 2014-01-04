@@ -70,3 +70,12 @@ func (this *HomeController) SinglePost() {
 	}
 	this.Data["SinglePost"] = arch
 }
+
+func (this *HomeController) Atom() {
+	atom, err := models.Feed.ToAtom()
+	if err != nil {
+		beego.Error("atom:", err)
+		return
+	}
+	this.Ctx.WriteString(atom)
+}
