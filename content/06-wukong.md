@@ -14,7 +14,7 @@
 	3. 索引器（indexer）协程，负责建立和查找索引表
 	4. 排序器（ranker）协程，负责对文档评分排序
     
-![](06-wukong/wukong.png)
+![](06-wukong-pics/wukong.png)
 
 **索引流程**
 
