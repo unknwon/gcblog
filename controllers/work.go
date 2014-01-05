@@ -26,14 +26,14 @@ func (this *WorkController) Get() {
 	this.Data["IsWork"] = true
 	this.TplNames = "home.html"
 	this.Data["AllWorks"] = models.GetAllWorks()
-	this.Data["RecentArchives"] = models.GetAllPosts()
+	this.Data["RecentList"] = models.GetRecentPosts(10)
 }
 
 func (this *WorkController) SingleWork() {
 	this.TplNames = "home.html"
 	this.Data["IsWork"] = true
 	this.Data["IsSingleWork"] = true
-	this.Data["RecentArchives"] = models.GetAllPosts()
+	this.Data["RecentList"] = models.GetRecentPosts(10)
 	work := models.GetSingleWork(this.Ctx.Request.RequestURI[6:])
 	if work == nil {
 		this.Redirect("/", 302)
