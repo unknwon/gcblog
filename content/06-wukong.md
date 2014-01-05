@@ -1,11 +1,15 @@
-悟空引擎入门
-====
+---
+Author: 陈辉
+Date: 2014-1-6
+---
 
-悟空引擎是第一个用Go语言创作的全文搜索引擎。该引擎能帮助你轻松地给自己的网站添加文本搜索能力，并可以定制搜索逻辑，同时该引擎也是学习搜索引擎技术的好起点。
+# 悟空引擎入门
 
-在本篇的结束，你将学会用悟空引擎写一个简单的全文本微博搜索，即[http://soooweibo.com](http://soooweibo.com)。
+悟空引擎是第一个用 Go 语言创作的全文搜索引擎。该引擎能帮助你轻松地给自己的网站添加文本搜索能力，并可以定制搜索逻辑，同时该引擎也是学习搜索引擎技术的好起点。
 
-引擎的代码、特性和文档请前往github上的[悟空项目主页](https://github.com/huichen/wukong)。下文中所有提到的代码路径都是基于悟空项目中的位置。
+在本篇的结束，你将学会用悟空引擎写一个简单的全文本微博搜索，即 [http://soooweibo.com](http://soooweibo.com)。
+
+引擎的代码、特性和文档请前往 GitHub 上的 [悟空项目主页](https://github.com/huichen/wukong)。下文中所有提到的代码路径都是基于悟空项目中的位置。
 
 ## 引擎的原理
 
@@ -32,9 +36,9 @@
 
 ## 文档抓取
 
-文档抓取的技术很多，多到可以单独拿出来写一篇文章。幸运的是微博抓取相对简单，可以通过新浪提供的API实现的，而且已经有[Go语言的SDK](http://github.com/huichen/gobo)可以并发抓取并且速度相当快。
+文档抓取的技术很多，多到可以单独拿出来写一篇文章。幸运的是微博抓取相对简单，可以通过新浪提供的API实现的，而且已经有 [Go语言的 SDK](http://github.com/huichen/gobo) 可以并发抓取并且速度相当快。
 
-我已经抓了大概十万篇微博放在了testdata/weibo_data.txt里，所以你就不需要自己做了。文件中每行存储了一篇微博，格式如下
+我已经抓了大概十万篇微博放在了 testdata/weibo_data.txt 里，所以你就不需要自己做了。文件中每行存储了一篇微博，格式如下
 
     <微博id>||||<时间戳>||||<用户id>||||<用户名>||||<转贴数>||||<评论数>||||<喜欢数>||||<小图片网址>||||<大图片网址>||||<正文>
 
@@ -50,11 +54,11 @@ type Weibo struct {
 }
 ```
 
-如果你对抓取的细节感兴趣请见抓取程序[testdata/crawl_weibo_data.go](https://github.com/huichen/wukong/blob/master/testdata/crawl_weibo_data.go)。
+如果你对抓取的细节感兴趣请见抓取程序 [testdata/crawl_weibo_data.go](https://github.com/huichen/wukong/blob/master/testdata/crawl_weibo_data.go)。
 
 ## 索引
 
-使用悟空引擎你需要import两个包
+使用悟空引擎你需要 import 两个包
 
 ```go
 import (
@@ -62,6 +66,7 @@ import (
 	"github.com/huichen/wukong/types"
 )
 ```
+
 第一个包定义了引擎功能，第二个包定义了常用结构体。在使用引擎之前需要初始化，例如
 
 ```go
@@ -74,15 +79,16 @@ searcher.Init(types.EngineInitOptions{
 	},
 })
 ```
-[types.EngineInitOptions](https://github.com/huichen/wukong/blob/master/types/engine_init_options.go)定义了初始化引擎需要设定的参数，比如从何处载入分词字典文件，停用词列表，索引器类型，BM25参数等，以及默认的评分规则（见“搜索”一节）和输出分页选项。具体细节请阅读代码中结构体的注释。
 
-特别需要强调的是请慎重选择IndexerInitOptions.IndexType的类型，共有三种不同类型的索引表：
+[types.EngineInitOptions](https://github.com/huichen/wukong/blob/master/types/engine_init_options.go) 定义了初始化引擎需要设定的参数，比如从何处载入分词字典文件，停用词列表，索引器类型，BM25 参数等，以及默认的评分规则（见“搜索”一节）和输出分页选项。具体细节请阅读代码中结构体的注释。
 
-1. DocIdsIndex，提供了最基本的索引，仅仅记录搜索键出现的文档docid。
-2. FrequenciesIndex，除了记录docid外，还保存了搜索键在每个文档中出现的频率，如果你需要BM25那么FrequenciesIndex是你需要的。
-3. LocationsIndex，这个不仅包括上两种索引的内容，还额外存储了关键词在文档中的具体位置，这用来[计算紧邻距离](https://github.com/huichen/wukong/blob/master/docs/token_proximity.md)。
+特别需要强调的是请慎重选择 IndexerInitOptions.IndexType 的类型，共有三种不同类型的索引表：
 
-这三种索引由上到下在提供更多计算能力的同时也消耗了更多的内存，特别是LocationsIndex，当文档很长时会占用大量内存。请根据需要平衡选择。
+1. DocIdsIndex，提供了最基本的索引，仅仅记录搜索键出现的文档 docid。
+2. FrequenciesIndex，除了记录 docid 外，还保存了搜索键在每个文档中出现的频率，如果你需要 BM25 那么 FrequenciesIndex 是你需要的。
+3. LocationsIndex，这个不仅包括上两种索引的内容，还额外存储了关键词在文档中的具体位置，这用来 [计算紧邻距离](https://github.com/huichen/wukong/blob/master/docs/token_proximity.md)。
+
+这三种索引由上到下在提供更多计算能力的同时也消耗了更多的内存，特别是 LocationsIndex，当文档很长时会占用大量内存。请根据需要平衡选择。
 
 初始化好了以后就可以添加索引了，下面的例子将一条微博加入引擎
 
@@ -96,7 +102,7 @@ searcher.IndexDocument(docId, types.DocumentIndexData{
 })
 ```
 
-文档的docId必须唯一，对微博来说可以直接用微博的ID。悟空引擎允许你加入三种索引数据：
+文档的 docId 必须唯一，对微博来说可以直接用微博的 ID。悟空引擎允许你加入三种索引数据：
 
 1. 文档的正文（content），会被分词为关键词（tokens）加入索引。
 2. 文档的关键词（tokens）。当正文为空的时候，允许用户绕过悟空内置的分词器直接输入文档关键词，这使得在引擎外部进行文档分词成为可能。
@@ -122,15 +128,18 @@ searcher.FlushIndex()
 3. 最后给微博打分为 BM25*(1+转发数/10000)
 
 这样的规则需要给每个文档保存一些评分数据，比如微博发布时间，微博的转发数等。这些数据保存在下面的结构体中
+
 ```go
 type WeiboScoringFields struct {
         Timestamp    uint64
         RepostsCount uint64
 }
 ```
-你可能已经注意到了，这就是在上一节将文档加入索引时调用的IndexDocument函数传入的参数类型（实际上那个参数是interface{}类型的，因此可以传入任意类型的结构体）。这些数据保存在排序器的内存中等待调用。
+
+你可能已经注意到了，这就是在上一节将文档加入索引时调用的 IndexDocument 函数传入的参数类型（实际上那个参数是 interface{} 类型的，因此可以传入任意类型的结构体）。这些数据保存在排序器的内存中等待调用。
 
 有了这些数据，我们就可以评分了，代码如下：
+
 ```go
 type WeiboScoringCriteria struct {
 }
@@ -152,10 +161,11 @@ func (criteria WeiboScoringCriteria) Score(
         return output
 }
 ```
-WeiboScoringCriteria实际上继承了types.ScoringCriteria接口，这个接口实现了Score函数。这个函数带有两个参数：
 
-1. types.IndexedDocument参数传递了从索引器中得到的数据，比如词频，词的具体位置，BM25值，紧邻度等信息，具体见[types/index.go](https://github.com/huichen/wukong/blob/master/types/index.go)的注释。
-2. 第二个参数是interface{}类型的，你可以把这个类型理解成C语言中的void指针，它可以指向任何数据类型。在我们的例子中指向的是WeiboScoringFields结构体，并通过反射机制检查是否是正确的类型。
+WeiboScoringCriteria 实际上继承了 types.ScoringCriteria 接口，这个接口实现了 Score 函数。这个函数带有两个参数：
+
+1. types.IndexedDocument 参数传递了从索引器中得到的数据，比如词频，词的具体位置，BM25 值，紧邻度等信息，具体见 [types/index.go](https://github.com/huichen/wukong/blob/master/types/index.go) 的注释。
+2. 第二个参数是 interface{} 类型的，你可以把这个类型理解成 C 语言中的 void 指针，它可以指向任何数据类型。在我们的例子中指向的是 WeiboScoringFields 结构体，并通过反射机制检查是否是正确的类型。
 
 有了自定义评分数据和自定义评分规则，我们就可以进行搜索了，见下面的代码
 
@@ -170,19 +180,19 @@ response := searcher.Search(types.SearchRequest{
 })
 ```
 
-其中，Text是输入的搜索短语（必须是UTF-8格式），会被分词为关键词。和索引时相同，悟空引擎允许绕过内置的分词器直接输入关键词和文档标签，见types.SearchRequest结构体的注释。RankOptions定义了排序选项。WeiboScoringCriteria就是我们在上面定义的评分规则。另外你也可以通过OutputOffset和MaxOutputs参数控制分页输出。搜索结果保存在response变量中，具体内容见[types/search_response.go](https://github.com/huichen/wukong/blob/master/types/search_response.go)文件中定义的SearchResponse结构体，比如这个结构体返回了关键词出现在文档中的位置，可以用来生成文档的摘要。
+其中，Text 是输入的搜索短语（必须是 UTF-8 格式），会被分词为关键词。和索引时相同，悟空引擎允许绕过内置的分词器直接输入关键词和文档标签，见 types.SearchRequest 结构体的注释。RankOptions 定义了排序选项。WeiboScoringCriteria 就是我们在上面定义的评分规则。另外你也可以通过 OutputOffset 和 MaxOutputs 参数控制分页输出。搜索结果保存在 response 变量中，具体内容见 [types/search_response.go](https://github.com/huichen/wukong/blob/master/types/search_response.go) 文件中定义的 SearchResponse 结构体，比如这个结构体返回了关键词出现在文档中的位置，可以用来生成文档的摘要。
 
 ## 显示
 
-完成用户搜索的最后一步是将搜索结果呈现给用户。 通常的做法是将搜索引擎做成一个后台服务，然后让前端以JSON-RPC的方式调用它。前端并不属于悟空引擎本身因此就不多着墨了。
+完成用户搜索的最后一步是将搜索结果呈现给用户。 通常的做法是将搜索引擎做成一个后台服务，然后让前端以 JSON-RPC 的方式调用它。前端并不属于悟空引擎本身因此就不多着墨了。
 
 ## 总结
 
-读到这里，你应该对使用悟空引擎进行微博搜索有了基本了解，建议你自己动手将其完成。如果你没有耐心，可以看看已经完成的代码，见[examples/codelab/search_server.go](https://github.com/huichen/wukong/blob/master/examples/codelab/search_server.go)，总共不到200行。运行这个例子非常简单，进入examples/codelab目录后输入
+读到这里，你应该对使用悟空引擎进行微博搜索有了基本了解，建议你自己动手将其完成。如果你没有耐心，可以看看已经完成的代码，见 [examples/codelab/search_server.go](https://github.com/huichen/wukong/blob/master/examples/codelab/search_server.go)，总共不到 200 行。运行这个例子非常简单，进入 examples/codelab 目录后输入
 
 	go run search_server.go
 
-等待终端中出现“索引了xxx条微博”的输出后，在浏览器中打开[http://localhost:8080](http://localhost:8080) 即可进入搜索页面，这实现了 http://soooweibo.com
+等待终端中出现“索引了xxx条微博”的输出后，在浏览器中打开 [http://localhost:8080](http://localhost:8080) 即可进入搜索页面，这实现了 http://soooweibo.com
 
 如果你想进一步了解悟空引擎，建议你直接阅读代码。代码的目录结构如下：
 
