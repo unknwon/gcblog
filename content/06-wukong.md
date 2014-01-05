@@ -50,7 +50,7 @@ type Weibo struct {
 }
 ```
 
-如果你对抓取的细节感兴趣请见抓取程序[testdata/crawl_weibo_data.go](/testdata/crawl_weibo_data.go)。
+如果你对抓取的细节感兴趣请见抓取程序[testdata/crawl_weibo_data.go](https://github.com/huichen/wukong/blob/master/testdata/crawl_weibo_data.go)。
 
 ## 索引
 
@@ -74,13 +74,13 @@ searcher.Init(types.EngineInitOptions{
 	},
 })
 ```
-[types.EngineInitOptions](/types/engine_init_options.go)定义了初始化引擎需要设定的参数，比如从何处载入分词字典文件，停用词列表，索引器类型，BM25参数等，以及默认的评分规则（见“搜索”一节）和输出分页选项。具体细节请阅读代码中结构体的注释。
+[types.EngineInitOptions](https://github.com/huichen/wukong/blob/master/types/engine_init_options.go)定义了初始化引擎需要设定的参数，比如从何处载入分词字典文件，停用词列表，索引器类型，BM25参数等，以及默认的评分规则（见“搜索”一节）和输出分页选项。具体细节请阅读代码中结构体的注释。
 
 特别需要强调的是请慎重选择IndexerInitOptions.IndexType的类型，共有三种不同类型的索引表：
 
 1. DocIdsIndex，提供了最基本的索引，仅仅记录搜索键出现的文档docid。
 2. FrequenciesIndex，除了记录docid外，还保存了搜索键在每个文档中出现的频率，如果你需要BM25那么FrequenciesIndex是你需要的。
-3. LocationsIndex，这个不仅包括上两种索引的内容，还额外存储了关键词在文档中的具体位置，这用来[计算紧邻距离](/docs/token_proximity.md)。
+3. LocationsIndex，这个不仅包括上两种索引的内容，还额外存储了关键词在文档中的具体位置，这用来[计算紧邻距离](https://github.com/huichen/wukong/blob/master/docs/token_proximity.md)。
 
 这三种索引由上到下在提供更多计算能力的同时也消耗了更多的内存，特别是LocationsIndex，当文档很长时会占用大量内存。请根据需要平衡选择。
 
@@ -154,7 +154,7 @@ func (criteria WeiboScoringCriteria) Score(
 ```
 WeiboScoringCriteria实际上继承了types.ScoringCriteria接口，这个接口实现了Score函数。这个函数带有两个参数：
 
-1. types.IndexedDocument参数传递了从索引器中得到的数据，比如词频，词的具体位置，BM25值，紧邻度等信息，具体见[types/index.go](/types/index.go)的注释。
+1. types.IndexedDocument参数传递了从索引器中得到的数据，比如词频，词的具体位置，BM25值，紧邻度等信息，具体见[types/index.go](https://github.com/huichen/wukong/blob/master/types/index.go)的注释。
 2. 第二个参数是interface{}类型的，你可以把这个类型理解成C语言中的void指针，它可以指向任何数据类型。在我们的例子中指向的是WeiboScoringFields结构体，并通过反射机制检查是否是正确的类型。
 
 有了自定义评分数据和自定义评分规则，我们就可以进行搜索了，见下面的代码
@@ -170,7 +170,7 @@ response := searcher.Search(types.SearchRequest{
 })
 ```
 
-其中，Text是输入的搜索短语（必须是UTF-8格式），会被分词为关键词。和索引时相同，悟空引擎允许绕过内置的分词器直接输入关键词和文档标签，见types.SearchRequest结构体的注释。RankOptions定义了排序选项。WeiboScoringCriteria就是我们在上面定义的评分规则。另外你也可以通过OutputOffset和MaxOutputs参数控制分页输出。搜索结果保存在response变量中，具体内容见[types/search_response.go](/types/search_response.go)文件中定义的SearchResponse结构体，比如这个结构体返回了关键词出现在文档中的位置，可以用来生成文档的摘要。
+其中，Text是输入的搜索短语（必须是UTF-8格式），会被分词为关键词。和索引时相同，悟空引擎允许绕过内置的分词器直接输入关键词和文档标签，见types.SearchRequest结构体的注释。RankOptions定义了排序选项。WeiboScoringCriteria就是我们在上面定义的评分规则。另外你也可以通过OutputOffset和MaxOutputs参数控制分页输出。搜索结果保存在response变量中，具体内容见[types/search_response.go](https://github.com/huichen/wukong/blob/master/types/search_response.go)文件中定义的SearchResponse结构体，比如这个结构体返回了关键词出现在文档中的位置，可以用来生成文档的摘要。
 
 ## 显示
 
@@ -178,7 +178,7 @@ response := searcher.Search(types.SearchRequest{
 
 ## 总结
 
-读到这里，你应该对使用悟空引擎进行微博搜索有了基本了解，建议你自己动手将其完成。如果你没有耐心，可以看看已经完成的代码，见[examples/codelab/search_server.go](/examples/codelab/search_server.go)，总共不到200行。运行这个例子非常简单，进入examples/codelab目录后输入
+读到这里，你应该对使用悟空引擎进行微博搜索有了基本了解，建议你自己动手将其完成。如果你没有耐心，可以看看已经完成的代码，见[examples/codelab/search_server.go](https://github.com/huichen/wukong/blob/master/examples/codelab/search_server.go)，总共不到200行。运行这个例子非常简单，进入examples/codelab目录后输入
 
 	go run search_server.go
 
