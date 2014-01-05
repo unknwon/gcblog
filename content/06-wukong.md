@@ -5,7 +5,7 @@
 
 在本篇的结束，你将学会用悟空引擎写一个简单的全文本微博搜索，即[http://soooweibo.com](http://soooweibo.com)。
 
-引擎的代码、特性和文档请前往github上的[悟空项目主页](https://github.com/huichen/wukong)。
+引擎的代码、特性和文档请前往github上的[悟空项目主页](https://github.com/huichen/wukong)。下文中所有提到的代码路径都是基于悟空项目中的位置。
 
 ## 引擎的原理
 
