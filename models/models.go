@@ -70,6 +70,9 @@ func loadArchiveNames() {
 	workNames := strings.Split(beego.AppConfig.String("works"), "|")
 	works = make([]*archive, 0, len(workNames))
 	for _, name := range workNames {
+		if len(name) == 0 {
+			continue
+		}
 		work := getFile(path.Join("work", name))
 		if work == nil {
 			continue
