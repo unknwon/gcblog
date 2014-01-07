@@ -174,7 +174,7 @@ func init() {
 		beego.Error("Watch path:", err)
 		return
 	}
-	err = watcher.Watch("conf/app.conf")
+	err = watcher.Watch("conf")
 	if err != nil {
 		beego.Error("Watch path:", err)
 		return
