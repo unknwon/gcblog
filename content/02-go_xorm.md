@@ -11,6 +11,8 @@ Date: 2014-1-2
 
 是的，[xorm](https://github.com/lunny/xorm) 不是为了取代 SQL，它甚至可以和 SQL 混用，它是在 databse/sql 接口的基础之上提供了更多的特性。我们将这些功能和特性比喻成七种武器，来帮助开发者快速的完成数据库的操作。
 
+[more]
+
 ## 安装
 
 当然，第一步，我们必须要安装 [xorm](https://github.com/lunny/xorm)：

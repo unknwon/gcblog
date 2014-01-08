@@ -13,6 +13,8 @@ Go 语言的标准库已经提供了 RPC 框架和不同的 RPC 实现.
 
 下面是一个服务器的例子:
 
+[more]
+
 	type Echo int
 	
 	func (t *Arith) Hi(args string, reply *string) error {

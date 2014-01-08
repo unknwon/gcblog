@@ -16,6 +16,7 @@ Go 语言 `runtime` 包的 `runtime.Caller` / `runtime.Callers` / `runtime.FuncF
 - [http://golang.org/pkg/runtime/#Callers](http://golang.org/pkg/runtime/#Callers)
 - [http://golang.org/pkg/runtime/#FuncForPC](http://golang.org/pkg/runtime/#FuncForPC)
 
+[more]
 
 本文主要讲述这几个函数的用法.
 

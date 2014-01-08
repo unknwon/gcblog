@@ -7,6 +7,8 @@ Date: 2014-1-8
 
 已知的其他框架看到的是传统 OOP 的影子, 到处充蚀 Class 风格的 OOP 方法. 而我们知道 GoLang 中是没有 Class 的. 笔者也曾努力用 Go 的风格做 WEB 开发, 总感到力不从心. 写出的代码不能完全称之为框架, 到更像一个拷贝源码使用的应用. 要达到灵活需要修改源码. 直到看到了 [Martini](https://github.com/codegangsta/martini). 纯 GoLang 风格的框架出现了.
 
+[more]
+
 ## 核心 Injector
 
 [Injector](https://github.com/codegangsta/inject) 是 [Martini](https://github.com/codegangsta/martini) 的核心. 其代码非常简洁. 功能仅仅是通过反射包, 对函数进行参数类型自动匹配进行调用. 
