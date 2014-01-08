@@ -32,8 +32,8 @@ type HomeController struct {
 func (this *HomeController) Get() {
 	this.Data["IsHome"] = true
 	this.TplNames = "home.html"
-	this.Data["RecentArchives"] = models.GetRecentPosts(5)
-	this.Data["RecentList"] = models.GetRecentPosts(10)
+	this.Data["RecentArchives"] = models.GetRecentPosts(15)
+	this.Data["RecentList"] = models.GetRecentPosts(15)
 }
 
 func (this *HomeController) Archives() {

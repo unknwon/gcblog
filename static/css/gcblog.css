@@ -8,6 +8,21 @@ body {
 	padding-top: 70px;
 	font-size: 15px;
 }
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Helvetica Neue",Helvetica,"Lucida Grande","Hiragino Sans GB","Microsoft YaHei", \5fae\8f6f\96c5\9ed1,"WenQuanYi Micro Hei",sans-serif;
+}
 .navbar-gcblog {
 	background-color: #2894FF;
  	border-color: #0072E3;
@@ -47,4 +62,10 @@ footer {
 	padding: 10px 0px 10px 0px;
 	color: white;
 	background-color: #46A3FF;
+}
+.article .text-muted {
+	margin: 0 0 30px 10px;
+}
+.article .markdown {
+	margin: 0 0 0 10px;
 }

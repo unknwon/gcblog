@@ -24,14 +24,17 @@
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
                 <h6 class="text-muted">{{.Author}} {{.Date}}</h6>
-                {{byte2str .Content | str2html}}
+                <div class="markdown">
+                    {{byte2str .Content | str2html}}
+                </div>
             </div>
+            <br>
             {{template "base/disqus.html"}}
             {{end}}
             {{else if .IsWork}}
             <h4>招聘发布与求职须知：</h4>
             <ul>
-                <li>招聘发布者须本者求贤若渴、以诚相待的态度发布招聘启事。</li>
+                <li>招聘发布者须本着求贤若渴、以诚相待的态度发布招聘启事。</li>
                 <li>所有招聘信息均由第三方提供，本站不对招聘具体内容负责。</li>
                 <li>若发现不实招聘信息，请及时告知我们。一经确认便将发布方加入黑名单并进行微博通告。</li>
                 <li>发布招聘信息步骤及格式请参考 <a href="https://github.com/Unknwon/gcblog/blob/master/README.md">GitHub</a>。</li>
@@ -40,9 +43,12 @@
             {{with .SingleWork}}
             <div class="article">
                 <h2 class="title">{{.Title}}</h2>
-                {{byte2str .Content | str2html}}
+                <div class="markdown">
+                    {{byte2str .Content | str2html}}
+                </div>
             </div>
             {{end}}
+            <br>
             {{template "base/disqus.html"}}
             {{else}}
             {{$isSingleWork := .IsSingleWork}}
@@ -58,9 +64,17 @@
             <div class="article">
                 <h1 class="title"><a href="/{{.Name}}">{{.Title}}</a></h1>
                 <h6 class="text-muted">{{.Author}} {{.Date}}</h6>
+                <div class="markdown">
                 {{if not $isAllPost}}
-                {{byte2str .Content | str2html}}
+                    {{if .Excerpt}}
+                        {{byte2str .Excerpt | str2html}}
+                        <br>
+                        <p><a href="/{{.Name}}">... 查看全部内容</a></p>
+                    {{else}}
+                        {{byte2str .Content | str2html}}
+                    {{end}}
                 {{end}}
+                </div>
             </div>
             {{end}}
             {{end}}
