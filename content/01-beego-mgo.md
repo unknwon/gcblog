@@ -5,7 +5,7 @@ Date: 2014-1-1
 
 # 使用 Beego 与 Mgo 开发的示例程序
 
-> 本文为技术翻译，原文地址（需翻墙）：http://www.goinggo.net/2013/12/sample-web-application-using-beego-and.html
+> 本文为转载技术翻译，原翻译地址：http://wuwen.org/article/1/sample-web-application-using-beego-and-mgo.html，原文地址（需翻墙）：http://www.goinggo.net/2013/12/sample-web-application-using-beego-and.html
 
 ## 简介
 
