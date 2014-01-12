@@ -10,6 +10,8 @@ Date: 2014-1-13
 
 gox 就是方便你使用 golang 的交叉编译的工具。
 
+[more]
+
 ### 安装 gox
 
 首先你的机器上需要装有 golang。配置好了 GOROOT,GOPATH 这两个环境变量。
