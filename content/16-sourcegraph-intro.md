@@ -5,7 +5,7 @@ Date: 2014-1-16
 
 # Sourcegraph 简介
 
-> 本文为转载，原文地址：http://wuwen.org/article/3/sourcegraph-intro.html
+> 本文为转载，原文地址：http://wuwen.org/article/14/sourcegraph-intro.html
 
 [Sourcegraph](https://sourcegraph.com/) 号称通过分析全球的开源项目来真正地展现相关项目之间的关联。它主要提供以下两个功能：
 
@@ -20,11 +20,13 @@ Date: 2014-1-16
 
 官方给出的建议还是比较抽象的。下面，我就以 [beego](http://beego.me) 为例，展示如何开始使用 Sourcegraph 这个网站来作为 Go 语言学习和开发的辅助工具。
 
+[more]
+
 ## 搜索库
 
 在首页搜索框，我们输入 `beego` 后，可看到一个即时提示的下拉框列表：
 
-![](http://wuwen.org/static/upload/sourcegraph-intro/QQ20140114-3@2x.png)
+![](http://wuwen.org/static/upload/201401160705289.png)
 
 - 第一行有一本书的图标的，表示这是一个项目，即 beego 这个项目。
 - 第二行有一个用户图标的，则是以 beego 为名的用户项目，在这个例子中，是一个组织的名称。
@@ -38,7 +40,7 @@ Date: 2014-1-16
 
 #### 顶部
 
-![](http://wuwen.org/static/upload/sourcegraph-intro/QQ20140114-1@2x.png)
+![](http://wuwen.org/static/upload/201401160707323.png)
 
 - beego 的贡献者数量
 - beego 的使用者数量
@@ -47,13 +49,13 @@ Date: 2014-1-16
 
 #### 左侧
 
-![](http://wuwen.org/static/upload/sourcegraph-intro/QQ20140114-2@2x.png)
+![](http://wuwen.org/static/upload/2014011607082910.png)
 
 beego 在 GitHub 上的 README 文件。
 
 #### 右侧
 
-![](http://wuwen.org/static/upload/sourcegraph-intro/QQ20140114-4@2x.png)
+![](http://wuwen.org/static/upload/201401160709189.png)
 
 beego 的函数、类型和方法的列表和统计数据，可进行项目内搜索。
 
