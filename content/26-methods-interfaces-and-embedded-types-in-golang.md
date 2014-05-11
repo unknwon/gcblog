@@ -1,8 +1,14 @@
-title: Go 语言中的方法，接口和嵌入类型
-date: 2014-05-05
-category: golang
-tags: [golang]
 ---
+Author: AriesDevil
+Date: 2014-05-05
+---
+
+# Go 语言中的方法，接口和嵌入类型
+
+> 本文为转载技术翻译，原翻译地址：http://se77en.cc/2014/05/05/methods-interfaces-and-embedded-types-in-golang/
+
+> 原
+文地址：http://www.goinggo.net/2014/05/methods-interfaces-and-embedded-types.html
 
 ## 概述
 
@@ -12,6 +18,8 @@ tags: [golang]
 * 如果编译器接受这样的定义，那么当接口调用时编译器要怎么确定该使用哪个实现？
 
 在写了一些测试代码并认真深入的读了一下标准之后，我发现了一些有意思的东西，而且觉得很有必要分享出来，那么让我们先从 Go 语言中的方法开始说起。
+
+[more]
 
 ## 方法
 
